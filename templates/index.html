@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Mart</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="top-menu">
+            <div class="top-menu-content">
+                <a href="/" class="top-menu-link">Home</a>
+                <a href="/templates/contact.html" class="top-menu-link">Contact Us</a>
+            </div>
+        </div>
+        <div class="top">
+            <div class="header-content">
+                <h1>Car Mart</h1>
+                <p>"Discover Your Perfect Ride"</p>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="left">
+                <form action="/" method="GET">
+                    <aside class="filters">
+                        <h2>Filters</h2>
+                        <input type="text" placeholder="Search by car name..." name="search">
+                        <label>Category</label>
+                        <select id="category" name="category">
+                            <option value="">All Category</option>
+                            {{range .CarData.Categories}}
+                            <option value="{{.Name}}">{{.Name}}</option>
+                            {{end}}
+                        </select>
+                        <label>Manufacturer</label>
+                        <select id="manufacturer" name="manufacturer">
+                            <option value="">All Manufacturer</option>
+                            {{range .CarData.Manufacturers}}
+                            <option value="{{.Name}}">{{.Name}}</option>
+                            {{end}}
+                        </select>
+                        <label>Model Year</label>
+                        <div class="model-year-container">
+                            <select id="model-year-min" name="minYear">
+                                <option value="">Minimum</option>
+                                {{range .ModelYears}}
+                                <option value="{{.}}">{{.}}</option>
+                                {{end}}
+                            </select>
+                            <select id="model-year-max" name="maxYear">
+                                <option value="">Maximum</option>
+                                {{range .ModelYears}}
+                                <option value="{{.}}">{{.}}</option>
+                                {{end}}
+                            </select>
+                        </div>
+                        <button type="submit">Apply Filters</button>
+                        <button type="reset" formaction="/">Clear Filters</button>
+                        <button type="submit" form="carForm" class="compare-button">Compare Selected Cars</button>
+                    </aside>
+
+                </form>
+
+            </div>
+            <div class="right">
+                <div class="recently-viewed">
+                    <h2>Recently Viewed Cars</h2>
+                    <div class="gallery">                      
+                        {{range .RecentlyViewedCars}}
+                        <div class="car-card">
+                            <a href="/car/{{.ID}}">
+                                <img src="/api/img/{{.Image}}" alt="{{.Name}}">
+                                <p>{{.Name}}</p>
+                                <p class="car-data">{{.Manufacturer.Name}} | {{.Year}} | {{.Category.Name}}</p>
+                            </a>
+                        </div>
+                        {{end}}              
+                    </div>
+                </div>
+                <hr>
+                <h2>Car Gallery</h2>
+                <form id="carForm" action="/compare" method="GET">
+                    <main class="gallery">
+                        {{if .CarData.CarModels}}
+                        {{range .CarData.CarModels}}
+                        <div class="car-card ">
+                            <label>
+                                <a href="/car/{{.ID}}">
+                                    <img src="/api/img/{{.Image}}" alt="{{.Name}}">
+                                    <p>{{.Name}}</p>
+                                    <p class="car-data">{{.Manufacturer.Name}} | {{.Year}} | {{.Category.Name}}</p>
+                                </a>
+                            </label>
+                            <input type="checkbox" name="carIDs" value="{{.ID}}" form="carForm" class="car-checkbox">
+                        </div>
+                        {{end}}
+                      
+                        {{else}}
+                        <p class="no-cars-message">No cars match your search criteria. Try adjusting your filters.</p>
+                        {{end}}
+                    </main>
+                </form>
+            </div>
+        </div>
+
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Car Mart. All rights reserved.</p>
+                <p><a href="/templates/contact.html">Contact Us</a></p>
+            </div>
+        </footer>
+    </div>
+    <a href="#top" class="back-to-top">↑</a>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Cars</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+
+<body>
+    <div class="container">
+        <div class="top-menu">
+            <div class="top-menu-content">
+                <a href="/" class="top-menu-link">Home</a>
+                <a href="/templates/contact.html" class="top-menu-link">Contact Us</a>
+            </div>
+        </div>
+        <div class="top">
+            <div class="header-content">
+                <h1>Car Mart</h1>
+                <p>"Discover Your Perfect Ride"</p>
+            </div>
+        </div>
+        <div class="comparison-section">
+            <h1>Compare Cars</h1>
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Model</th>
+                            <th>Manufacturer</th>
+                            <th>Country</th>
+                            <th>Year</th>
+                            <th>Engine</th>
+                            <th>Horsepower</th>
+                            <th>Transmission</th>
+                            <th>Drivetrain</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{if .}}
+                        {{range .}}
+                        <tr>
+                            <td> <img src="/api/img/{{.Image}}" alt="{{.Name}}" class="view-content"></td>
+                            <td>{{.Name}}</td>
+                            <td>{{.Manufacturer.Name}}</td>
+                            <td>{{.Manufacturer.Country}}</td>
+                            <td>{{.Year}}</td>
+                            <td>{{.Specifications.Engine}}</td>
+                            <td>{{.Specifications.Horsepower}}</td>
+                            <td>{{.Specifications.Transmission}}</td>
+                            <td>{{.Specifications.Drivetrain}}</td>
+                        </tr>
+                        {{end}}
+                        {{else}}
+                        <tr>
+                            <td colspan="9" class="no-data">No cars selected. Please choose one or more cars from the gallery to compare.</td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="back-button-container">
+                <a href="/" class="back-button">Back to Gallery</a>
+            </div>
+        </div>
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Car Mart. All rights reserved.</p>
+                <p><a href="/templates/contact.html">Contact Us</a></p>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
